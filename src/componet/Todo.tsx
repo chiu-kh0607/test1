@@ -1,38 +1,31 @@
-import { FormEvent, FunctionComponent, MouseEvent } from "react";
+import { FunctionComponent, MouseEvent, useContext } from "react";
+import { TodoContext } from "../context/TodoContext";
 
 interface TodoProps {
-    id:number,
-    text:string,
-    isComplete:boolean,
-    handleRemove:(e:MouseEvent<HTMLButtonElement>,key:number)=>void,
-    handleComplete:(e:MouseEvent<HTMLButtonElement>,key:number)=>void,
+  todo: ITodo;
 }
-interface Todo{
-    key:number,
-    text:string,
-    isComplete:boolean,
-}
- 
-const Todo: FunctionComponent<TodoProps> = ({
-    id,
-    text,
-    isComplete,
-    handleRemove,
-    handleComplete,
-}) => {
-    return (
-        <div
-            className={isComplete?'Complete Todo':'Incomplete Todo'}
-        >
-            <span>{text}</span>
-            <button
-                onClick={(e:MouseEvent<HTMLButtonElement>)=>{handleComplete(e,id)}}
-            >[complete]</button>
-            <button
-                onClick={(e:MouseEvent<HTMLButtonElement>)=>{handleRemove(e,id)}}
-            >[delete]</button>
-        </div>
-    );
-}
- 
+
+const Todo: FunctionComponent<TodoProps> = ({ todo }) => {
+  const { handleComplete, handleRemove } = useContext(TodoContext);
+  return (
+    <div className={todo.isComplete ? "Complete Todo" : "Incomplete Todo"}>
+      <span>{todo.text}</span>
+      <button
+        onClick={(e: MouseEvent<HTMLButtonElement>) => {
+          handleComplete(e, todo.key);
+        }}
+      >
+        [complete]
+      </button>
+      <button
+        onClick={(e: MouseEvent<HTMLButtonElement>) => {
+          handleRemove(e, todo.key);
+        }}
+      >
+        [delete]
+      </button>
+    </div>
+  );
+};
+
 export default Todo;
