@@ -11,7 +11,7 @@ const InputField: React.FC = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          handleAdd(e.currentTarget.value);
+          handleAdd(text);
         }}
       >
         <input
